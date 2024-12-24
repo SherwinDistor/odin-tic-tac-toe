@@ -21,8 +21,22 @@ const Gameboard = (function() {
         }
     }
 
-    
+    const getBoard = () => board;
 
-    console.log(board)
+    const updateSquare = (row, column, marker) => {
+        if (board[row][column] === 0) {
+            board[row][column] = marker;
+            return true;
+        }
+        return false;
+    }
+
+    const printBoard = () => {
+        console.log(board.map(row => row.join(" ")).join("\n"))
+    }
+
+    return { getBoard, updateSquare, printBoard }
+
 })();
 
+Gameboard.printBoard()
