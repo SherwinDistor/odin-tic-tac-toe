@@ -54,10 +54,65 @@ const Player = (name, marker) => {
     return { getName, getMarker, getWins, incrementWins }
 }
 
-const player1 = Player("Bob", 1);
-console.log(player1.getName());
+// Game turn logic and flow
+const Game = (() => {
+    // Initialize players
+    let player1, player2, currentPlayer;
+
+    const startGame = (name1, name2) => {
+        player1 = Player(name1, 1);
+        player2 = Player(name2, 2);
+        currentPlayer = player1;
+    }
+    
+    const playTurn = (row, column) => {
+        if (Gameboard.updateSquare(row, column, currentPlayer.getMarker())) {
+            if (checkWinner(currentPlayer.getMarker())) {
+                console.log(`${currentPlayer.getName()} wins!`);
+                currentPlayer.incrementWins();
+                return true;
+            }
+            if (checkTie()) {
+                console.log('It is a tie.');
+                return true;
+            }
+            switchTurn();
+        } else {
+            console.log('Choose different space.')
+        }
+        return false;
+    }
+
+    const switchTurn = () => {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+        console.log(`It is now ${currentPlayer.getName()}'s turn.`);
+    }
+
+    const checkWinner = (marker) => {
+
+    }
+
+    const checkTie = () => {
+        const board = Gameboard.getBoard();
+        return board.flat().every((space) => space !== 0);
+    }
+
+    return { startGame, playTurn }
+
+})();
 
 Gameboard.printBoard()
-Gameboard.updateSquare(1, 0, 2)
+
+Game.startGame("Henry", "Peter")
+
+Game.playTurn(1, 1);
+
 Gameboard.printBoard()
-Gameboard.getBoard()
+
+Game.playTurn(0, 1);
+
+Gameboard.printBoard()
+
+Game.playTurn(0, 2)
+
+Gameboard.printBoard()
