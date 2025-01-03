@@ -39,4 +39,25 @@ const Gameboard = (function() {
 
 })();
 
+// Create players factory to hold information
+const Player = (name, marker) => {
+    let wins = 0;
+
+    const getName = () => name;
+    const getMarker = () => marker;
+    const getWins = () => wins;
+
+    const incrementWins = () => {
+        wins++;
+    };
+
+    return { getName, getMarker, getWins, incrementWins }
+}
+
+const player1 = Player("Bob", 1);
+console.log(player1.getName());
+
 Gameboard.printBoard()
+Gameboard.updateSquare(1, 0, 2)
+Gameboard.printBoard()
+Gameboard.getBoard()
