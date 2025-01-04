@@ -89,6 +89,32 @@ const Game = (() => {
     }
 
     const checkWinner = (marker) => {
+        const board = Gameboard.getBoard();
+
+        // Check win in rows
+        for (const row of board) {
+            if (row.every((space) => space === marker)) {
+                return true;
+            }
+        }
+
+        // Check win in columns
+        for (let column = 0; column < board[0].length; column++) {
+            if (board.every((row) => row[column] === marker)) {
+                return true;
+            }
+        }
+
+        // Check win diagonals
+        if (board.every((_, index) => board[index][index] === marker)) {
+            return true;
+        }
+
+        if (board.every((_, index) => board[index][board.length - 1 - index] === marker )) {
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -114,5 +140,13 @@ Game.playTurn(0, 1);
 Gameboard.printBoard()
 
 Game.playTurn(0, 2)
+
+Gameboard.printBoard()
+
+Game.playTurn(2, 2)
+
+Gameboard.printBoard()
+
+Game.playTurn(2, 0)
 
 Gameboard.printBoard()
