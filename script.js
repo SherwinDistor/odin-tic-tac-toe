@@ -30,8 +30,17 @@ const Gameboard = (function() {
         console.log(board.map(row => row.join(" ")).join("\n"))
     }
 
+    // Add method to clear board/restart game
+    const clearBoard = () => {
+        board.forEach(
+            (row) => row.forEach(
+                (_, index) => row[index] = 0));
+        console.log('Gameboard was cleared.');
+        console.log(Gameboard.printBoard());
+    }
+
     // Make methods available
-    return { getBoard, updateSquare, printBoard }
+    return { getBoard, updateSquare, printBoard, clearBoard }
 
 })();
 
@@ -133,8 +142,15 @@ const Game = (() => {
         return board.flat().every((space) => space !== 0);
     }
 
+    // Add method to restart game
+    const restartGame = () => {
+        Gameboard.clearBoard();
+        currentPlayer = player1;
+        console.log('Game restarted.');
+    }
+
     // Make methods available 
-    return { startGame, playTurn }
+    return { startGame, playTurn, restartGame };
 
 })();
 
