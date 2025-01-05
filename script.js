@@ -64,6 +64,7 @@ const Game = (() => {
         player1 = Player(name1, 'X');
         player2 = Player(name2, 'O');
         currentPlayer = player1;
+        console.log(`Game started with ${player1.getName()} and ${player2.getName()}`);
     }
     
     // Add method to take a turn passing in the row and column where the player picks
@@ -80,6 +81,8 @@ const Game = (() => {
                 console.log('It is a tie.');
                 return true;
             }
+            console.log(`${currentPlayer.getName()} took a turn.`)
+            Gameboard.printBoard();
             switchTurn();
         } else {
             console.log('Choose different space.')
