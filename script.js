@@ -193,6 +193,10 @@ const DisplayController = (() => {
         }
         renderBoard(Gameboard.getBoard());
     }
+
+    // Make methods available
+    return { renderBoard, updateStatus, handleSquareClick };
+    
 })();
 
 // Add event listeners for the start game button
