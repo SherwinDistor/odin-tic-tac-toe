@@ -188,3 +188,18 @@ const DisplayController = (() => {
     }
 })();
 
+// Add event listeners for the start game button
+document.getElementById('start-game').addEventListener('click', () => {
+    const player1Name = document.getElementById('player1-name').value || 'Player 1';
+    const player2Name = document.getElementById('player2-name').value || 'Player 2';
+    Game.startGame(player1Name, player2Name);
+    DisplayController.updateStatus(`${player1Name}'s turn.`);
+    DisplayController.renderBoard(Gameboard.getBoard());
+})
+
+// Add event listeners for the reset game button
+document.getElementById('restart-game').addEventListener('click', () => {
+    Game.startGame(player1Name, player2Name);
+    DisplayController.updateStatus('Game restarted.');
+    DisplayController.renderBoard(Gameboard.getBoard());
+})
