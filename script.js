@@ -73,6 +73,7 @@ const Game = (() => {
         player1 = Player(name1, 'X');
         player2 = Player(name2, 'O');
         currentPlayer = player1;
+        Gameboard.clearBoard();
         console.log(`Game started with ${player1.getName()} and ${player2.getName()}`);
     }
     
@@ -152,5 +153,38 @@ const Game = (() => {
     // Make methods available 
     return { startGame, playTurn, restartGame };
 
+})();
+
+const DisplayController = (() => {
+    const gameboardElement = document.getElementById('gameboard');
+
+    const renderBoard = (board) => {
+        gameboardElement.innerHTML = '';
+        board.forEach((row, rowIndex) => {
+            row.forEach((square, colIndex) => {
+                const squareElement = document.createElement('div');
+                squareElement.classList.add('square');
+                squareElement.textContent = square === 0 ? '' : square === 1 ? 'X' : 'O';
+                squareElement.addEventListener('click', () => {
+                    handleSquareClick(rowIndex, colIndex);
+                });
+                gameboardElement.appendChild(squareElement);
+            })
+        })
+    }
+
+    const updateStatus = (message) => {
+        const statusElement = document.getElementById('status');
+        statusElement.textContent = message;
+    }
+
+    const handleSquareClick = (row, column) => {
+        if (!Game.playTurn(row, column)) {
+            updateStatus('Invalid move, try again.');
+        } else {
+            updateStatus(`${Game.getCurrentPlayer().getName()}'s turn.`)
+        }
+        renderBoard(Gameboard.getBoard());
+    }
 })();
 
