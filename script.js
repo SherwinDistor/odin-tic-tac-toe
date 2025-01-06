@@ -171,7 +171,7 @@ const DisplayController = (() => {
             row.forEach((square, colIndex) => {
                 const squareElement = document.createElement('div');
                 squareElement.classList.add('square');
-                squareElement.textContent = square === 0 ? '' : square === 1 ? 'X' : 'O';
+                squareElement.textContent = square === 0 ? '' : square === 'X' ? 'X' : 'O';
                 squareElement.addEventListener('click', () => {
                     handleSquareClick(rowIndex, colIndex);
                 });
@@ -186,17 +186,17 @@ const DisplayController = (() => {
     }
 
     const handleSquareClick = (row, column) => {
-        if (!Game.playTurn(row, column)) {
-            updateStatus('Invalid move, try again.');
-        } else {
+        if (Game.playTurn(row, column)) {
             updateStatus(`${Game.getCurrentPlayer().getName()}'s turn.`)
+        } else {
+            updateStatus('Invalid move, try again.');
         }
         renderBoard(Gameboard.getBoard());
     }
 
     // Make methods available
-    return { renderBoard, updateStatus, handleSquareClick };
-    
+    return { renderBoard, updateStatus };
+
 })();
 
 // Add event listeners for the start game button
@@ -210,7 +210,8 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 // Add event listeners for the reset game button
 document.getElementById('restart-game').addEventListener('click', () => {
-    Game.startGame(player1Name, player2Name);
+    // Game.startGame(player1Name, player2Name);
+    Game.restartGame();
     DisplayController.updateStatus('Game restarted.');
     DisplayController.renderBoard(Gameboard.getBoard());
 })
