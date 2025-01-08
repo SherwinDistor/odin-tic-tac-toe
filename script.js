@@ -75,7 +75,6 @@ const Game = (() => {
         currentPlayer = player1;
         Gameboard.clearBoard();
         console.log(`Game started with ${player1.getName()} and ${player2.getName()}`);
-        DisplayController.updateStatus(`Game started with ${player1.getName()} and ${player2.getName()}`);
     }
     
     // Add method to take a turn passing in the row and column where the player picks
@@ -84,14 +83,12 @@ const Game = (() => {
             // Validate turn by checking for a winner first
             if (checkWinner(currentPlayer.getMarker())) {
                 console.log(`${currentPlayer.getName()} wins!`);
-                DisplayController.updateStatus(`${currentPlayer.getName()} wins!`);
                 currentPlayer.incrementWins();
                 return true;
             }
             // Validate turn by checking for a tie
             if (checkTie()) {
                 console.log('It is a tie.');
-                DisplayController.updateStatus('It is a tie.');
                 return true;
             }
             console.log(`${currentPlayer.getName()} took a turn.`)
@@ -107,7 +104,6 @@ const Game = (() => {
     const switchTurn = () => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
         console.log(`It is now ${currentPlayer.getName()}'s turn.`);
-        DisplayController.updateStatus(`It is now ${currentPlayer.getName()}'s turn.`);
     }
 
     // Add method to get current player
@@ -186,11 +182,11 @@ const DisplayController = (() => {
     }
 
     const handleSquareClick = (row, column) => {
-        if (Game.playTurn(row, column)) {
-            updateStatus(`${Game.getCurrentPlayer().getName()}'s turn.`)
-        } else {
-            updateStatus('Invalid move, try again.');
-        }
+        // if (Game.playTurn(row, column)) {
+        //     updateStatus(`${Game.getCurrentPlayer().getName()}'s turn.`)
+        // } else {
+        //     updateStatus('Invalid move, try again.');
+        // }
         renderBoard(Gameboard.getBoard());
     }
 
