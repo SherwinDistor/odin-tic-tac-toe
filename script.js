@@ -54,13 +54,9 @@ const Player = (name, marker) => {
     const getMarker = () => marker;
     const getWins = () => wins;
 
-    // Add method to increase win total
-    const incrementWins = () => {
-        wins++;
-    };
 
     // Make methods available
-    return { getName, getMarker, getWins, incrementWins }
+    return { getName, getMarker, getWins }
 }
 
 // Game turn logic and flow
@@ -85,7 +81,6 @@ const Game = (() => {
             if (checkWinner(currentPlayer.getMarker())) {
                 console.log(`${currentPlayer.getName()} wins!`);
                 message = `${currentPlayer.getName()} wins! Restart game.`;
-                currentPlayer.incrementWins();
                 return true;
             }
             // Validate turn by checking for a tie
