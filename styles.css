@@ -1,8 +1,16 @@
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
 #gameboard {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
-    gap: 5px;    
+    border: 1px solid gray;
+    padding: 10px;
 }
 
 .square {
@@ -14,4 +22,29 @@
     justify-content: center;
     font-size: 24px;
     cursor: pointer;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+input {
+    text-align: center;
+}
+
+button {
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 100px;
+}
+
+#start-game {
+    background-color: lightgreen;
+}
+
+#restart-game {
+    background-color: lightsalmon;
 }
