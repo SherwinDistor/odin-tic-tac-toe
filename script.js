@@ -67,6 +67,7 @@ const Player = (name, marker) => {
 const Game = (() => {
     // Initialize players
     let player1, player2, currentPlayer;
+    let message = '';
 
     // Add method to start game and set player 1 as current player and assign marker
     const startGame = (name1, name2) => {
@@ -83,12 +84,14 @@ const Game = (() => {
             // Validate turn by checking for a winner first
             if (checkWinner(currentPlayer.getMarker())) {
                 console.log(`${currentPlayer.getName()} wins!`);
+                message = `${currentPlayer.getName()} wins! Restart game.`;
                 currentPlayer.incrementWins();
                 return true;
             }
             // Validate turn by checking for a tie
             if (checkTie()) {
                 console.log('It is a tie.');
+                message = 'It is a tie. Restart game.';
                 return true;
             }
             console.log(`${currentPlayer.getName()} took a turn.`)
@@ -96,6 +99,7 @@ const Game = (() => {
             switchTurn();
         } else {
             console.log('Choose different space.')
+            message = 'Choose different space.';
         }
         return false;
     }
@@ -104,10 +108,13 @@ const Game = (() => {
     const switchTurn = () => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
         console.log(`It is now ${currentPlayer.getName()}'s turn.`);
+        message = `It is now ${currentPlayer.getName()}'s turn.`;
     }
 
     // Add method to get current player
     const getCurrentPlayer = () => currentPlayer;
+
+    const getMessage = () => message;
 
     // Add method to check winner
     const checkWinner = (marker) => {
@@ -154,7 +161,7 @@ const Game = (() => {
     }
 
     // Make methods available 
-    return { startGame, playTurn, restartGame, getCurrentPlayer };
+    return { startGame, playTurn, restartGame, getCurrentPlayer, getMessage };
 
 })();
 
@@ -182,12 +189,9 @@ const DisplayController = (() => {
     }
 
     const handleSquareClick = (row, column) => {
-        // if (Game.playTurn(row, column)) {
-        //     updateStatus(`${Game.getCurrentPlayer().getName()}'s turn.`)
-        // } else {
-        //     updateStatus('Invalid move, try again.');
-        // }
-        renderBoard(Gameboard.getBoard());
+        Game.playTurn(row, column); // Play the turn
+        renderBoard(Gameboard.getBoard()); // Update the board visually
+        updateStatus(Game.getMessage()); // Use the message from Game
     }
 
     // Make methods available
